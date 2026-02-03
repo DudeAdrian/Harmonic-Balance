@@ -1,0 +1,129 @@
+{
+  "_comment": "Example configuration for MultiPodCluster generation - v0.1.0",
+  "project_name": "Harmonic Village Cluster",
+  "version": "0.1.0-genesis",
+  
+  "typology": {
+    "type": "multi_pod_cluster",
+    "name": "MultiPodCluster",
+    "description": "4-pod village arrangement with central gathering space for community living"
+  },
+  
+  "geometry": {
+    "pod_count": 4,
+    "pod_diameter_m": 6.0,
+    "pod_height_m": 3.0,
+    "arrangement_radius_m": 12.0,
+    "arrangement": "circular",
+    "central_space_diameter_m": 8.0,
+    "site_area_sqm": 452,
+    "total_sleepers": 6
+  },
+  
+  "pods": [
+    {
+      "id": "pod_1",
+      "sleepers": 2,
+      "position_degrees": 0,
+      "center": [12.0, 0],
+      "features": ["full_facilities"]
+    },
+    {
+      "id": "pod_2",
+      "sleepers": 2,
+      "position_degrees": 90,
+      "center": [0, 12.0],
+      "features": ["full_facilities"]
+    },
+    {
+      "id": "pod_3",
+      "sleepers": 1,
+      "position_degrees": 180,
+      "center": [-12.0, 0],
+      "features": ["sleeping_only"]
+    },
+    {
+      "id": "pod_4",
+      "sleepers": 1,
+      "position_degrees": 270,
+      "center": [0, -12.0],
+      "features": ["sleeping_only"]
+    }
+  ],
+  
+  "central_space": {
+    "diameter_m": 8.0,
+    "area_sqm": 50.3,
+    "type": "shared_gathering",
+    "features": ["fire_pit", "cooking_area", "seating"],
+    "acoustic_isolation_db": 55
+  },
+  
+  "connections": {
+    "walkways": [
+      {"from": "pod_1", "to": "central", "length_m": 8.0, "width_m": 1.5},
+      {"from": "pod_2", "to": "central", "length_m": 8.0, "width_m": 1.5},
+      {"from": "pod_3", "to": "central", "length_m": 8.0, "width_m": 1.5},
+      {"from": "pod_4", "to": "central", "length_m": 8.0, "width_m": 1.5}
+    ],
+    "pod_to_pod_distance_m": 16.97
+  },
+  
+  "acoustics": {
+    "target_frequency_hz": 7.83,
+    "central_space_modes": {
+      "axial_fundamental": 49.0,
+      "radial_fundamental": 65.4
+    },
+    "pod_isolation": {
+      "wall_transmission_loss_db": 45,
+      "distance_loss_db": 9.1,
+      "total_isolation_db": 54.1,
+      "privacy_rating": "excellent"
+    }
+  },
+  
+  "printer": {
+    "type": "wasp_crane",
+    "layer_height_mm": 20,
+    "nozzle_diameter_mm": 40,
+    "print_speed_mm_s": 50,
+    "material": "local_earth",
+    "sequence": "Print all 4 pods sequentially from central position"
+  },
+  
+  "materials": {
+    "mix_type": "local_earth",
+    "per_pod_m3": 75,
+    "total_pods_m3": 300,
+    "central_space_m3": 25,
+    "walkways_m3": 15,
+    "total_m3": 340,
+    "composition": {
+      "clay_percent": 30,
+      "sand_percent": 50,
+      "silt_percent": 20,
+      "water_percent": 8
+    }
+  },
+  
+  "compliance": {
+    "location": "italy",
+    "standard": "NTC_2018",
+    "seismic_zone": 3,
+    "note": "Multi-unit classification requires engineering review"
+  },
+  
+  "features": [
+    "circular_site_plan",
+    "shared_central_space",
+    "pod_independence",
+    "community_gathering",
+    "walkway_connections"
+  ],
+  
+  "construction_time_days": 30,
+  
+  "export_formats": ["gcode", "stl", "obj"],
+  "anchor_to_terracare": true
+}

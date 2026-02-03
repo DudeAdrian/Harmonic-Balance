@@ -1,0 +1,82 @@
+{
+  "_comment": "Example configuration for SinglePod generation - v0.1.0",
+  "project_name": "Single Pod Wellness Dwelling",
+  "version": "0.1.0-genesis",
+  
+  "typology": {
+    "type": "single_pod",
+    "name": "SinglePod",
+    "description": "Circular dwelling for 1-2 sleepers with Schumann resonance optimization"
+  },
+  
+  "geometry": {
+    "diameter_m": 6.5,
+    "height_m": 3.2,
+    "wall_thickness_m": 0.30,
+    "core_diameter_m": 1.2,
+    "floor_area_sqm": 33.2,
+    "volume_cubic_m": 52.8
+  },
+  
+  "acoustics": {
+    "target_frequency_hz": 7.83,
+    "schumann_alignment": true,
+    "room_modes": {
+      "axial_fundamental": 53.6,
+      "optimal_height_for_7.83hz": 21.9
+    },
+    "wall_texture": "honeycomb_high",
+    "diffusion_coefficient": 0.75
+  },
+  
+  "printer": {
+    "type": "wasp_crane",
+    "layer_height_mm": 20,
+    "nozzle_diameter_mm": 40,
+    "print_speed_mm_s": 50,
+    "material": "local_earth"
+  },
+  
+  "materials": {
+    "mix_type": "local_earth",
+    "composition": {
+      "clay_percent": 30,
+      "sand_percent": 50,
+      "silt_percent": 20,
+      "water_percent": 8
+    },
+    "additives": {
+      "natural_fibers_percent": 2,
+      "lime_percent": 5
+    },
+    "performance": {
+      "compression_mpa": "2-5",
+      "thermal_conductivity": "0.8-1.2 W/mK",
+      "cure_days": 28
+    }
+  },
+  
+  "compliance": {
+    "location": "italy",
+    "standard": "NTC_2018",
+    "seismic_zone": 3,
+    "eurocodes": [6, 1],
+    "nzeb": true,
+    "wall_thickness_min_mm": 300
+  },
+  
+  "features": [
+    "central_service_core_type_a",
+    "radial_layout",
+    "honeycomb_wall_texture",
+    "schumann_coupled_acoustics",
+    "single_unit_clustering"
+  ],
+  
+  "sleepers": [1, 2],
+  "construction_time_days": 5,
+  "estimated_material_m3": 85,
+  
+  "export_formats": ["gcode", "stl", "obj"],
+  "anchor_to_terracare": true
+}

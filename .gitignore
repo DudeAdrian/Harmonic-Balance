@@ -1,0 +1,105 @@
+# Harmonic-Balance .gitignore
+# Private repository - sensitive configuration and outputs
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+secrets/
+
+# Blender temporary files
+*.blend1
+*.blend2
+*.blend~
+*.blend autosave
+
+# Large output files (keep only samples in samples/)
+*.stl
+*.obj
+*.gcode
+*.ply
+*.fbx
+output/
+outputs/
+exports/
+*.blend
+!samples/*.stl
+!samples/*.obj
+!samples/*.gcode
+!samples/*.blend
+
+# Terracare anchors (local registry)
+terracare/anchors/*.json
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+*.db
+
+# Test coverage
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# Documentation builds
+docs/_build/
+docs/_static/
+docs/_templates/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+*.cache

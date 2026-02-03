@@ -1,5 +1,10 @@
 # Harmonic-Balance
 
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)]()
+[![Python Version](https://img.shields.io/badge/python-3.9%2B-blue)]()
+[![License](https://img.shields.io/badge/license-Proprietary-red)]()
+[![Version](https://img.shields.io/badge/version-0.1.0--genesis-orange)]()
+
 **Sacred geometry generation for resonant dwellings.**
 
 Computational temple architecture for the modern age. Design frequency-tuned, 3D printed earth dwellings optimized for human wellbeing.
@@ -20,18 +25,64 @@ Harmonic Habitats generates earth dwellings that combine:
 
 ## 🚀 Quick Start
 
+### 3 Commands to First Dwelling
+
 ```bash
-# Generate a SinglePod for WASP Crane (default)
+# 1. Clone repository
+git clone https://github.com/DudeAdrian/Harmonic-Balance.git
+cd Harmonic-Balance
+
+# 2. Install dependencies
+pip install -r requirements.txt
+
+# 3. Generate your first dwelling
 python api/generate.py --typology single_pod --area 50 --frequency 7.83
+```
 
-# Generate for any Marlin-compatible printer
-python api/generate.py --typology single_pod --printer generic
+**Output:** `outputs/YYYYMMDD_HHMMSS_single_pod/` containing:
+- `single_pod.gcode` - Ready to print
+- `single_pod_report.json` - Complete specification
+- `printer_compatibility_report.txt` - Setup guide
 
-# Export STL for use with any slicer
-python api/generate.py --typology single_pod --export stl
+---
 
-# Batch process concept images
-python api/generate.py --batch
+## 📐 Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    HARMONIC HABITATS v0.1.0                     │
+│                   Sacred Geometry Engine                        │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐      │
+│  │   GENESIS    │───▶│  RESONANCE   │───▶│ COMPLIANCE   │      │
+│  │              │    │              │    │              │      │
+│  │ • Geometry   │    │ • Schumann   │    │ • NTC 2018   │      │
+│  │ • Typologies │    │ • Room Modes │    │ • Eurocode 6 │      │
+│  │ • Seeder     │    │ • Malta      │    │ • nZEB       │      │
+│  └──────────────┘    └──────────────┘    └──────────────┘      │
+│         │                   │                   │               │
+│         └───────────────────┼───────────────────┘               │
+│                             ▼                                   │
+│                  ┌──────────────────────┐                       │
+│                  │   GENERIC SLICER     │                       │
+│                  │                      │                       │
+│                  │ • Marlin G-code      │                       │
+│                  │ • G2/G3 Arcs         │                       │
+│                  │ • WASP/generic       │                       │
+│                  └──────────────────────┘                       │
+│                             │                                   │
+│         ┌───────────────────┼───────────────────┐               │
+│         ▼                   ▼                   ▼               │
+│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐      │
+│  │    OUTPUT    │    │   EXPORTS    │    │  TERRACARE   │      │
+│  │              │    │              │    │              │      │
+│  │ • .gcode     │    │ • .stl       │    │ • Anchor     │      │
+│  │ • Reports    │    │ • .obj       │    │ • Provenance │      │
+│  │ • Materials  │    │ • .blend     │    │ • Version    │      │
+│  └──────────────┘    └──────────────┘    └──────────────┘      │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -78,44 +129,78 @@ Circular dwelling for 1-2 sleepers:
 - **Dimensions**: 6-7m diameter, 3.2m height
 - **Area**: 48-55m²
 - **Features**: Central service core (Type A), radial layout, honeycomb wall texture
-- **Volume**: 8.5-9.5m³ RMDC
 
 ### MultiPodCluster
 4-pod village arrangement for 6 sleepers:
 - **Configuration**: 4 individual pods in circular arrangement
 - **Site plan**: 12m arrangement radius, 8m central gathering space
-- **Shared space**: Central gathering area with connecting paths
 
 ### OrganicFamily
 Large flowing dwelling for extended family:
 - **Dimensions**: 15m x 5.6m footprint
 - **Levels**: 2 levels with spiral stairs
 - **Bedrooms**: 4 bedrooms
-- **Footprint**: 84m²
 
 ---
 
-## 📐 Design Features
+## 📦 Installation
 
-### Acoustic Engineering
-- **Schumann resonance coupling**: Room modes aligned to 7.83 Hz
-- **Honeycomb diffusion**: Wall cavities as acoustic diffusers
-- **Malta oracle acoustics**: 80Hz resonance targets, 6.5s reverb
+```bash
+# Clone repository
+git clone https://github.com/DudeAdrian/Harmonic-Balance.git
+cd Harmonic-Balance
 
-### Compliance
-- **Italy NTC 2018**: Full seismic zone validation
-- **Eurocode 6**: Masonry/earth structure verification
-- **Eurocode 1**: Load calculations for printed earth
-- **nZEB**: Nearly Zero Energy Building standards
+# Install dependencies
+pip install -r requirements.txt
 
-| Climate Zone | Target EPh (kWh/m²/y) |
-|--------------|----------------------|
-| A | 35 |
-| B | 40 |
-| C | 45 |
-| D | 50 |
-| E | 55 |
-| F | 60 |
+# Verify installation
+python api/generate.py --version
+```
+
+### Requirements
+- Python 3.9+
+- numpy, scipy
+- Pillow (image processing)
+- PyYAML (config files)
+- bpy (optional, for Blender export)
+
+---
+
+## 📝 Usage Examples
+
+### Using Example Configurations
+
+```bash
+# Single Pod
+python api/generate.py --config examples/example_single_pod.json
+
+# Organic Family
+python api/generate.py --config examples/example_organic_family.json
+
+# Cluster
+python api/generate.py --config examples/example_cluster.json
+```
+
+### Command Line Generation
+
+```bash
+# Generate for WASP Crane
+python api/generate.py \
+  --typology single_pod \
+  --diameter 6.5 \
+  --frequency 7.83 \
+  --printer wasp_crane
+
+# Export for Custom Slicer
+python api/generate.py \
+  --typology organic_family \
+  --length 15 \
+  --width 5.6 \
+  --export stl obj
+
+# Batch Process Concepts
+python api/generate.py --batch --printer generic
+```
 
 ---
 
@@ -123,10 +208,10 @@ Large flowing dwelling for extended family:
 
 ### Standard Earth Mix
 ```
-Clay:    30%
-Sand:    50%
-Silt:    20%
-Water:   8%
+Clay:    30%  (binder)
+Sand:    50%  (aggregate)
+Silt:    20%  (filler)
+Water:   8%   (activation)
 Additives: Natural fibers (2%), Lime (5%)
 ```
 
@@ -136,30 +221,6 @@ Additives: Natural fibers (2%), Lime (5%)
 - Cure time: 28 days
 
 *Calibrated for WASP Crane - adjust for other printers*
-
-### Resonance-Enhanced Mix
-Optional quartz additive for frequency-tuned structures.
-
----
-
-## 📦 Export Options
-
-### 3D Printing
-- **G-code**: Direct to printer (Marlin-compatible)
-- **STL**: Universal 3D print format
-- **OBJ**: With materials and textures
-- **.blend**: Full Blender scene
-
-### Construction
-- **Formwork**: STL → Desktop 3D print → Reusable molds
-- **CNC**: OBJ → Toolpaths → Plywood formwork
-- **Manual**: Dimensioned drawings → Traditional construction
-
-### Documentation
-- Compliance reports
-- Material specifications
-- Acoustic analysis
-- Terracare blockchain anchor
 
 ---
 
@@ -172,7 +233,6 @@ We are actively pursuing a strategic partnership with **WASP (World's Advanced S
 - **Technical integration**: Our software outputs WASP-ready G-code
 - **Pilot project**: Proposed SinglePod demonstration print
 - **Market opportunity**: Wellness-focused 3D printed dwellings
-- **Compliance advantage**: Built-in Italy NTC 2018 validation
 
 See [`docs/PARTNERSHIP_PROPOSAL.md`](docs/PARTNERSHIP_PROPOSAL.md) for full proposal.
 
@@ -180,7 +240,7 @@ See [`docs/PARTNERSHIP_PROPOSAL.md`](docs/PARTNERSHIP_PROPOSAL.md) for full prop
 
 **You do NOT need WASP partnership to use Harmonic Habitats.**
 
-Our open-source architecture supports:
+Our open architecture supports:
 - ✅ Any Marlin-compatible 3D printer
 - ✅ CNC manufacturing
 - ✅ Traditional hand-building
@@ -195,106 +255,58 @@ See [`docs/INDEPENDENT_BUILD.md`](docs/INDEPENDENT_BUILD.md) for standalone usag
 ```
 Harmonic-Balance/
 ├── genesis/              # Sacred geometry core
-│   ├── geometry.py       # Base geometry & WASPPrinter
-│   ├── seeder.py         # Image recognition & parametric DNA
-│   └── typologies.py     # SinglePod, MultiPodCluster, OrganicFamily
-│
-├── printer/              # Generic 3D printing support
-│   ├── generic_slicer.py # Marlin-compatible G-code
-│   └── materials.py      # Earth mix specifications
-│
+├── printer/              # Generic 3D printing (Marlin-compatible)
 ├── resonance/            # Acoustic engineering
-│   ├── tuner.py          # Basic Schumann alignment
-│   └── acoustic_engine.py # Advanced room mode analysis
-│
-├── compliance/           # Italy/EU compliance
-│   └── eurocodes.py      # NTC 2018, EC6, EC1, nZEB
-│
-├── render_farm/          # Visualization
-│   └── blender_bridge.py # Blender mesh generation
-│
+├── compliance/           # Italy/EU compliance (NTC 2018)
+├── render_farm/          # Blender integration
 ├── terracare/            # Blockchain provenance
-│   └── anchor.py         # Design hashing & anchoring
-│
-├── api/                  # Command-line interface
-│   └── generate.py       # Complete generation pipeline
-│
+├── api/                  # CLI interface
+├── config/               # YAML configuration
+├── examples/             # Example JSON configs
 ├── docs/                 # Documentation
-│   ├── PARTNERSHIP_PROPOSAL.md  # WASP partnership proposal
-│   └── INDEPENDENT_BUILD.md     # Standalone usage guide
-│
-└── README.md
+└── .github/workflows/    # CI/CD
 ```
 
 ---
 
-## 🛠️ Installation
+## 🗺️ Roadmap
 
-```bash
-# Clone repository
-git clone https://github.com/DudeAdrian/Harmonic-Balance.git
-cd Harmonic-Balance
+### v0.1.0 Genesis (Current)
+- ✅ Sacred geometry engine
+- ✅ Schumann resonance alignment
+- ✅ WASP/generic printer support
+- ✅ NTC 2018 compliance
+- ✅ Terracare anchoring
 
-# Install dependencies
-pip install -r requirements.txt
+### v0.2.0 Compliance Expansion
+- 🔄 Eurocode 8 seismic analysis
+- 🔄 German DIN standards
+- 🔄 French DTU codes
+- 🔄 US IBC integration
 
-# Run generation
-python api/generate.py --help
-```
+### v0.3.0 Terracare Integration
+- 🔄 Live blockchain anchoring
+- 🔄 IPFS document storage
+- 🔄 Design marketplace
+- 🔄 Automated permitting
 
-### Requirements
-- Python 3.8+
-- numpy, scipy
-- Pillow (image processing)
-- bpy (optional, for Blender export)
+### v0.4.0 AI Optimization
+- 🔄 Generative design AI
+- 🔄 Climate-responsive forms
+- 🔄 Material optimization
+- 🔄 Structural topology
 
 ---
 
-## 📝 Usage Examples
+## 🔒 License
 
-### Generate for WASP Crane
-```bash
-python api/generate.py \
-  --typology single_pod \
-  --diameter 6.5 \
-  --frequency 7.83 \
-  --printer wasp_crane
-```
+**Proprietary - All Rights Reserved**
 
-### Export for Custom Slicer
-```bash
-python api/generate.py \
-  --typology organic_family \
-  --length 15 \
-  --width 5.6 \
-  --export stl obj
-```
+This software is private and proprietary. See [LICENSE](LICENSE) for details.
 
-### Batch Process Concepts
-```bash
-# Place images in genesis/concepts/
-python api/generate.py --batch --printer generic
-```
-
-### Programmatic Usage
-```python
-from genesis.typologies import SinglePod
-from printer.generic_slicer import generate_for_printer
-
-# Generate geometry
-pod = SinglePod(diameter=6.5)
-result = pod.generate()
-
-# Generate G-code for your printer
-gcode_result = generate_for_printer(
-    'single_pod',
-    printer_type='generic',
-    diameter=6.5,
-    height=3.2
-)
-
-print(gcode_result['gcode'])
-```
+- No commercial use without written agreement
+- Sacred geometry algorithms protected
+- Partnership licensing available
 
 ---
 
@@ -306,18 +318,13 @@ The Schumann resonance - Earth's heartbeat - is embedded in every Harmonic Habit
 
 ---
 
-## 📄 License
-
-Private repository. See LICENSE for details.
-
----
-
 ## 🔗 Links
 
 - **GitHub**: https://github.com/DudeAdrian/Harmonic-Balance
 - **WASP**: https://www.3dwasp.com/
-- **Documentation**: See `docs/` directory
+- **Examples**: See `examples/` directory
 
 ---
 
-*Computational temple architecture for the modern age.*
+*Computational temple architecture for the modern age.*  
+**v0.1.0-genesis - Sacred Geometry Engine**

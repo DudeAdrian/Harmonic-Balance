@@ -1,0 +1,108 @@
+{
+  "_comment": "Example configuration for OrganicFamily generation - v0.1.0",
+  "project_name": "Organic Family Sanctuary",
+  "version": "0.1.0-genesis",
+  
+  "typology": {
+    "type": "organic_family",
+    "name": "OrganicFamily",
+    "description": "Large flowing dwelling for extended family with multi-level design"
+  },
+  
+  "geometry": {
+    "length_m": 15.0,
+    "width_m": 5.6,
+    "height_per_level_m": 2.8,
+    "levels": 2,
+    "total_height_m": 5.6,
+    "footprint_sqm": 84.0,
+    "volume_cubic_m": 470.4,
+    "bedrooms": 4
+  },
+  
+  "features": {
+    "form_language": "flowing_organic",
+    "curvature": "high",
+    "stairs": "spiral",
+    "central_gathering": true,
+    "multi_level": true,
+    "flowing_walls": true
+  },
+  
+  "acoustics": {
+    "target_frequency_hz": 7.83,
+    "schumann_alignment": true,
+    "spiral_stair_waveguide": {
+      "helix_length_m": 12.4,
+      "cutoff_frequency_hz": 143.0,
+      "mode_coupling": "vertical_transmission"
+    },
+    "multi_level_modes": true
+  },
+  
+  "rooms": {
+    "level_1": [
+      {"name": "central_gathering", "type": "common", "area_sqm": 25},
+      {"name": "kitchen_dining", "type": "common", "area_sqm": 18},
+      {"name": "bedroom_1", "type": "sleeping", "area_sqm": 12},
+      {"name": "bathroom_1", "type": "service", "area_sqm": 6}
+    ],
+    "level_2": [
+      {"name": "bedroom_2", "type": "sleeping", "area_sqm": 14},
+      {"name": "bedroom_3", "type": "sleeping", "area_sqm": 12},
+      {"name": "bedroom_4", "type": "sleeping", "area_sqm": 12},
+      {"name": "study", "type": "common", "area_sqm": 10},
+      {"name": "bathroom_2", "type": "service", "area_sqm": 6}
+    ]
+  },
+  
+  "printer": {
+    "type": "wasp_crane",
+    "layer_height_mm": 20,
+    "nozzle_diameter_mm": 40,
+    "print_speed_mm_s": 45,
+    "material": "enhanced_resonance",
+    "phases": [
+      {"phase": 1, "action": "print_level_1_walls", "days": 5},
+      {"phase": 2, "action": "install_level_1_floor", "days": 2},
+      {"phase": 3, "action": "print_level_2_walls", "days": 5},
+      {"phase": 4, "action": "install_roof", "days": 3}
+    ]
+  },
+  
+  "materials": {
+    "mix_type": "enhanced_resonance",
+    "composition": {
+      "clay_percent": 28,
+      "sand_percent": 47,
+      "silt_percent": 20,
+      "water_percent": 8
+    },
+    "additives": {
+      "quartz_powder_percent": 5,
+      "natural_fibers_percent": 2,
+      "lime_percent": 3
+    },
+    "performance": {
+      "compression_mpa": "2.5-5.5",
+      "thermal_conductivity": "0.9-1.3 W/mK",
+      "cure_days": 35,
+      "frequency_optimized": true
+    }
+  },
+  
+  "compliance": {
+    "location": "italy",
+    "standard": "NTC_2018",
+    "seismic_zone": 2,
+    "eurocodes": [6, 1, 8],
+    "nzeb": true,
+    "wall_thickness_min_mm": 350
+  },
+  
+  "construction_time_days": 22,
+  "estimated_material_m3": 180,
+  
+  "export_formats": ["gcode", "stl", "obj", "blend"],
+  "anchor_to_terracare": true
+}
