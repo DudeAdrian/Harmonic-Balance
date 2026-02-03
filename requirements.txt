@@ -22,6 +22,12 @@ pyyaml>=6.0
 flask>=2.0.0
 werkzeug>=2.0.0
 
+# Documentation engine (CAD, PDF, BIM)
+ezdxf>=1.1.0          # AutoCAD DXF generation
+reportlab>=4.0.0      # PDF document generation
+ifcopenshell>=0.7.0   # IFC BIM export
+python-dxf>=0.1.0     # Alternative DXF library
+
 # Testing
 pytest>=7.0.0
 pytest-cov>=3.0.0

@@ -25,6 +25,14 @@ from compliance.eurocodes import ComplianceValidator
 from resonance.acoustic_engine import full_acoustic_analysis
 from printer.generic_slicer import generate_for_printer
 from terracare.anchor import TerraCareAnchor
+from docs_engine import (
+    create_drawing_set,
+    PDFDrawingSet,
+    export_geometry_to_ifc,
+    ScheduleGenerator,
+    calculate_single_pod_structure,
+    generate_energy_report_for_typology
+)
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'harmonic-habitats-secret-key'
@@ -237,6 +245,75 @@ def generate_dwelling(typology: str, params: Dict, job_id: str) -> Dict:
             json.dump(results, f, indent=2, default=str)
         results['files']['report'] = str(report_path)
         
+        # 7. Generate professional documentation
+        docs_dir = output_dir / 'documentation'
+        docs_dir.mkdir(exist_ok=True)
+        
+        # 7a. CAD Drawings (DXF)
+        try:
+            dxf_files = create_drawing_set(project_name, geometry, docs_dir / 'dxf')
+            results['files']['dxf_drawings'] = {k: str(v) for k, v in dxf_files.items()}
+        except Exception as e:
+            print(f"DXF generation skipped: {e}")
+        
+        # 7b. PDF Drawing Set
+        try:
+            pdf_gen = PDFDrawingSet(docs_dir / 'drawing_set.pdf')
+            pdf_path = pdf_gen.generate_drawing_set(project_name, geometry, docs_dir)
+            results['files']['pdf_drawings'] = str(pdf_path)
+        except Exception as e:
+            print(f"PDF generation skipped: {e}")
+        
+        # 7c. BIM Model (IFC)
+        try:
+            ifc_path = export_geometry_to_ifc(geometry, project_name, docs_dir / 'model.ifc')
+            results['files']['bim_ifc'] = str(ifc_path)
+        except Exception as e:
+            print(f"IFC export skipped: {e}")
+        
+        # 7d. Construction Schedules
+        try:
+            sched_gen = ScheduleGenerator(project_name)
+            sched_gen.generate_from_geometry(geometry, typology)
+            csv_files = sched_gen.export_csv(docs_dir)
+            results['files']['schedules_csv'] = {k: str(v) for k, v in csv_files.items()}
+            pdf_sched = sched_gen.export_pdf(docs_dir / 'schedules.pdf')
+            results['files']['schedules_pdf'] = str(pdf_sched)
+        except Exception as e:
+            print(f"Schedules generation skipped: {e}")
+        
+        # 7e. Structural Calculations
+        try:
+            if typology == 'single_pod':
+                struct_report = calculate_single_pod_structure(
+                    geometry.get('diameter', 6.5),
+                    3.2, 0.30
+                )
+                results['files']['structural_report'] = str(struct_report)
+        except Exception as e:
+            print(f"Structural calc skipped: {e}")
+        
+        # 7f. Energy Report / APE
+        try:
+            energy_files = generate_energy_report_for_typology(typology, geometry, docs_dir)
+            results['files']['energy_reports'] = {k: str(v) for k, v in energy_files.items()}
+        except Exception as e:
+            print(f"Energy report skipped: {e}")
+        
+        # Create zip file of all documentation
+        try:
+            import zipfile
+            zip_path = output_dir / f"{typology}_documentation.zip"
+            with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+                for root, dirs, files in os.walk(docs_dir):
+                    for file in files:
+                        file_path = Path(root) / file
+                        arcname = file_path.relative_to(output_dir)
+                        zipf.write(file_path, arcname)
+            results['files']['documentation_zip'] = str(zip_path)
+        except Exception as e:
+            print(f"Zip creation skipped: {e}")
+        
         results['success'] = True
         
     except Exception as e:
@@ -341,28 +418,51 @@ def download(job_id, file_type):
     """Download generated files."""
     output_dir = app.config['OUTPUT_FOLDER'] / job_id
     
-    file_map = {
-        'gcode': f"{results.get('typology', 'dwelling')}.gcode",
-        'report': f"{results.get('typology', 'dwelling')}_report.json",
-        'anchor': 'terracare_anchor.json'
-    }
-    
-    if file_type not in file_map:
-        return jsonify({'error': 'Invalid file type'}), 400
-    
-    # Load results to get typology
+    # Load results to get file paths
     results_file = output_dir / 'results.json'
-    if results_file.exists():
-        with open(results_file, 'r') as f:
-            results = json.load(f)
-        
-        files = results.get('files', {})
-        if file_type == 'gcode' and 'gcode' in files:
-            return send_file(files['gcode'], as_attachment=True)
-        elif file_type == 'report' and 'report' in files:
-            return send_file(files['report'], as_attachment=True)
-        elif file_type == 'anchor' and 'anchor' in files:
-            return send_file(files['anchor'], as_attachment=True)
+    if not results_file.exists():
+        return jsonify({'error': 'Job not found'}), 404
+    
+    with open(results_file, 'r') as f:
+        results = json.load(f)
+    
+    files = results.get('files', {})
+    
+    # Basic files
+    if file_type == 'gcode' and 'gcode' in files:
+        return send_file(files['gcode'], as_attachment=True)
+    elif file_type == 'report' and 'report' in files:
+        return send_file(files['report'], as_attachment=True)
+    elif file_type == 'anchor' and 'anchor' in files:
+        return send_file(files['anchor'], as_attachment=True)
+    
+    # Documentation files
+    elif file_type == 'documentation' and 'documentation_zip' in files:
+        return send_file(files['documentation_zip'], 
+                        as_attachment=True,
+                        download_name=f"{results.get('typology', 'dwelling')}_documentation.zip")
+    elif file_type == 'bim' and 'bim_ifc' in files:
+        return send_file(files['bim_ifc'], 
+                        as_attachment=True,
+                        download_name=f"{results.get('typology', 'dwelling')}.ifc")
+    elif file_type == 'drawings' and 'pdf_drawings' in files:
+        return send_file(files['pdf_drawings'], 
+                        as_attachment=True,
+                        download_name=f"{results.get('typology', 'dwelling')}_drawings.pdf")
+    elif file_type == 'schedules' and 'schedules_pdf' in files:
+        return send_file(files['schedules_pdf'], 
+                        as_attachment=True,
+                        download_name=f"{results.get('typology', 'dwelling')}_schedules.pdf")
+    elif file_type == 'structural' and 'structural_report' in files:
+        return send_file(files['structural_report'], 
+                        as_attachment=True,
+                        download_name=f"{results.get('typology', 'dwelling')}_structural.txt")
+    elif file_type == 'energy' and 'energy_reports' in files:
+        # Get first energy report
+        energy_files = files.get('energy_reports', {})
+        if energy_files:
+            first_file = list(energy_files.values())[0]
+            return send_file(first_file, as_attachment=True)
     
     return jsonify({'error': 'File not found'}), 404
 
