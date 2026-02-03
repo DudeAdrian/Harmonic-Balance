@@ -102,42 +102,117 @@ document.addEventListener('DOMContentLoaded', function() {
         generateBtn.disabled = true;
     }
 
-    // Form submission
+    // Form submission with fetch()
     uploadForm.addEventListener('submit', async (e) => {
+        e.preventDefault(); // Prevent normal form submission
+        
         if (!selectedFile) {
-            e.preventDefault();
             alert('Please select an image first');
             return;
         }
 
         // Show loading overlay
         loadingOverlay.hidden = false;
-        updateLoadingProgress(0);
+        updateLoadingProgress(5, 'Uploading image...');
 
-        // Simulate progress updates (in production, this would be real progress)
-        const stages = [
-            { progress: 10, message: 'Analyzing sketch...' },
-            { progress: 25, message: 'Detecting typology...' },
-            { progress: 40, message: 'Generating geometry...' },
-            { progress: 55, message: 'Running compliance checks...' },
-            { progress: 70, message: 'Optimizing acoustics (7.83 Hz)...' },
-            { progress: 85, message: 'Generating G-code...' },
-            { progress: 95, message: 'Creating 3D preview...' },
-            { progress: 100, message: 'Finalizing...' }
-        ];
+        // Create FormData and append the file
+        const formData = new FormData();
+        formData.append('image', selectedFile);
 
-        let stageIndex = 0;
-        const progressInterval = setInterval(() => {
-            if (stageIndex < stages.length) {
-                const stage = stages[stageIndex];
-                updateLoadingProgress(stage.progress, stage.message);
-                stageIndex++;
-            } else {
-                clearInterval(progressInterval);
-            }
-        }, 800);
+        try {
+            // Use XMLHttpRequest for progress tracking
+            const xhr = new XMLHttpRequest();
+            
+            // Track upload progress
+            xhr.upload.addEventListener('progress', (event) => {
+                if (event.lengthComputable) {
+                    const percentComplete = Math.round((event.loaded / event.total) * 100);
+                    updateLoadingProgress(percentComplete * 0.3, 'Uploading image...'); // Upload is 30% of total
+                }
+            });
 
-        // Form will submit normally, loading overlay shows during page transition
+            // Handle response
+            xhr.addEventListener('load', () => {
+                if (xhr.status === 200) {
+                    // Server responded with redirect or success
+                    updateLoadingProgress(100, 'Complete!');
+                    
+                    // Check if response is a redirect
+                    const responseUrl = xhr.responseURL;
+                    if (responseUrl && responseUrl.includes('/results/')) {
+                        window.location.href = responseUrl;
+                    } else if (xhr.getResponseHeader('Content-Type')?.includes('json')) {
+                        // JSON response - check for redirect
+                        try {
+                            const data = JSON.parse(xhr.responseText);
+                            if (data.redirect) {
+                                window.location.href = data.redirect;
+                            } else if (data.error) {
+                                alert('Error: ' + data.error);
+                                loadingOverlay.hidden = true;
+                            }
+                        } catch (e) {
+                            // Not JSON, might be HTML redirect
+                            document.open();
+                            document.write(xhr.responseText);
+                            document.close();
+                        }
+                    } else {
+                        // HTML response - likely a redirect page
+                        document.open();
+                        document.write(xhr.responseText);
+                        document.close();
+                    }
+                } else {
+                    alert('Upload failed. Please try again.');
+                    loadingOverlay.hidden = true;
+                }
+            });
+
+            xhr.addEventListener('error', () => {
+                alert('Network error. Please check your connection and try again.');
+                loadingOverlay.hidden = true;
+            });
+
+            xhr.addEventListener('abort', () => {
+                loadingOverlay.hidden = true;
+            });
+
+            // Simulate server-side progress after upload completes
+            xhr.addEventListener('loadstart', () => {
+                // After upload starts, simulate the server processing stages
+                const stages = [
+                    { progress: 35, message: 'Analyzing sketch...' },
+                    { progress: 45, message: 'Detecting typology...' },
+                    { progress: 55, message: 'Generating geometry...' },
+                    { progress: 65, message: 'Running compliance checks...' },
+                    { progress: 75, message: 'Optimizing acoustics (7.83 Hz)...' },
+                    { progress: 85, message: 'Generating G-code...' },
+                    { progress: 92, message: 'Creating 3D preview...' },
+                    { progress: 98, message: 'Finalizing...' }
+                ];
+
+                let stageIndex = 0;
+                const progressInterval = setInterval(() => {
+                    if (stageIndex < stages.length && !loadingOverlay.hidden) {
+                        const stage = stages[stageIndex];
+                        updateLoadingProgress(stage.progress, stage.message);
+                        stageIndex++;
+                    } else {
+                        clearInterval(progressInterval);
+                    }
+                }, 1200); // Update every 1.2 seconds during processing
+            });
+
+            // Send the request
+            xhr.open('POST', '/upload', true);
+            xhr.send(formData);
+
+        } catch (error) {
+            console.error('Upload error:', error);
+            alert('An error occurred during upload. Please try again.');
+            loadingOverlay.hidden = true;
+        }
     });
 
     // Update loading progress
