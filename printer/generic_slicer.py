@@ -349,20 +349,20 @@ def generate_for_printer(typology: str, printer_type: str = "wasp_crane",
     
     if typology == 'single_pod':
         gcode = slicer.generate_circular_wall(
-            diameter=geometry_params.get('diameter', 6.5),
-            height=geometry_params.get('height', 3.2),
-            wall_thickness=geometry_params.get('wall_thickness', 0.30)
+            diameter_m=geometry_params.get('diameter', 6.5),
+            height_m=geometry_params.get('height', 3.2),
+            wall_thickness_m=geometry_params.get('wall_thickness', 0.30)
         )
     elif typology == 'straight_wall':
         gcode = slicer.generate_straight_wall(
-            length=geometry_params.get('length', 10.0),
-            height=geometry_params.get('height', 3.0),
-            wall_thickness=geometry_params.get('wall_thickness', 0.30)
+            length_m=geometry_params.get('length', 10.0),
+            height_m=geometry_params.get('height', 3.0),
+            wall_thickness_m=geometry_params.get('wall_thickness', 0.30)
         )
     elif typology == 'spiral_vase':
         gcode = slicer.generate_spiral_vase(
-            diameter=geometry_params.get('diameter', 6.0),
-            height=geometry_params.get('height', 3.0)
+            diameter_m=geometry_params.get('diameter', 6.0),
+            height_m=geometry_params.get('height', 3.0)
         )
     else:
         raise ValueError(f"Unknown typology: {typology}")
