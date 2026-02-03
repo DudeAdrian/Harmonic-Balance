@@ -97,7 +97,7 @@ class ScheduleGenerator:
                 item_code="M-001",
                 description="3D Printed Earth Wall",
                 quantity=round(wall_volume, 2),
-                unit="m³",
+                unit="m3",
                 specification="Clay 30%, Sand 50%, Silt 20%, Water 8%. Lime stabilizer 5%.",
                 supplier="Local source + WASP Crane",
                 notes="Print in 200mm layers, cure 28 days"
@@ -130,7 +130,7 @@ class ScheduleGenerator:
                 description="Double Glazed Window",
                 quantity=1,
                 unit="nr",
-                specification="800x1200mm, Low-E glass, U-value 1.2 W/m²K",
+                specification="800x1200mm, Low-E glass, U-value 1.2 W/m2K",
                 u_value=1.2
             ))
             
@@ -139,7 +139,7 @@ class ScheduleGenerator:
                 item_code="M-005",
                 description="Green Roof System",
                 quantity=round(floor_area, 2),
-                unit="m²",
+                unit="m2",
                 specification="ETFE membrane + growing medium + indigenous plants",
                 notes="Extensive green roof, 150mm substrate"
             ))
@@ -189,7 +189,7 @@ class ScheduleGenerator:
                 description="Double Glazed Windows",
                 quantity=6,  # Multiple for family dwelling
                 unit="nr",
-                specification="Various sizes, Low-E glass, U-value 1.2 W/m²K"
+                specification="Various sizes, Low-E glass, U-value 1.2 W/m2K"
             ))
             
             # Roof
@@ -388,7 +388,7 @@ class ScheduleGenerator:
         with open(dw_path, 'w', newline='', encoding='utf-8') as f:
             writer = csv.writer(f)
             writer.writerow(['Type Code', 'Description', 'Width (mm)', 'Height (mm)',
-                           'Material', 'U-Value (W/m²K)', 'Quantity', 'Location'])
+                           'Material', 'U-Value (W/m2K)', 'Quantity', 'Location'])
             for item in self.doors_windows:
                 writer.writerow([
                     item.type_code, item.description, item.width_mm, item.height_mm,
@@ -400,7 +400,7 @@ class ScheduleGenerator:
         room_path = output_dir / 'schedule_rooms.csv'
         with open(room_path, 'w', newline='', encoding='utf-8') as f:
             writer = csv.writer(f)
-            writer.writerow(['Room No.', 'Room Name', 'Area (m²)', 'Volume (m³)',
+            writer.writerow(['Room No.', 'Room Name', 'Area (m2)', 'Volume (m3)',
                            'Max Occupancy', 'Floor Finish', 'Wall Finish', 'Ceiling Finish'])
             for item in self.rooms:
                 writer.writerow([
@@ -516,7 +516,7 @@ class ScheduleGenerator:
         story.append(Spacer(1, 10))
         
         if self.rooms:
-            room_data = [['No.', 'Name', 'Area (m²)', 'Volume (m³)', 'Occupancy', 'Floor', 'Walls']]
+            room_data = [['No.', 'Name', 'Area (m2)', 'Volume (m3)', 'Occupancy', 'Floor', 'Walls']]
             for item in self.rooms:
                 room_data.append([
                     item.room_number,

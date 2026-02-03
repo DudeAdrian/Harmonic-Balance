@@ -216,7 +216,7 @@ class StructuralCalculator:
         foundation_depth = 0.8  # m typical
         
         # Settlement estimate (simplified)
-        # Elastic settlement = (q * B * (1 - v²)) / E
+        # Elastic settlement = (q * B * (1 - v^2)) / E
         # Assuming medium stiff soil
         settlement_mm = 5.0  # Conservative estimate
         
@@ -328,15 +328,15 @@ class StructuralCalculator:
         report.append("MATERIAL PROPERTIES")
         report.append("-" * 70)
         report.append(f"Material: 3D Printed Earth")
-        report.append(f"Density: {self.EARTH_DENSITY} kg/m³")
+        report.append(f"Density: {self.EARTH_DENSITY} kg/m3")
         report.append(f"Compressive strength: {self.EARTH_COMPRESSIVE_STRENGTH} MPa")
-        report.append(f"Safety factor (γM): {self.GAMMA_M}")
+        report.append(f"Safety factor (gamma M): {self.GAMMA_M}")
         report.append("")
         
         report.append("SAFETY FACTORS (Eurocode)")
         report.append("-" * 70)
-        report.append(f"Dead load (γG): {self.GAMMA_G}")
-        report.append(f"Live load (γQ): {self.GAMMA_Q}")
+        report.append(f"Dead load (gamma G): {self.GAMMA_G}")
+        report.append(f"Live load (gamma Q): {self.GAMMA_Q}")
         report.append("")
         
         for i, calc in enumerate(self.calculations, 1):

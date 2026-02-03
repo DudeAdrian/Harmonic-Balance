@@ -26,7 +26,7 @@ class MaterialProperties:
     """Material physical properties."""
     name: str
     thermal_conductivity: float  # W/mK
-    density: float  # kg/m³
+    density: float  # kg/m3
     compressive_strength: float  # MPa
     specific_heat: float = 1000  # J/kgK
     porosity: float = 0.3
@@ -706,7 +706,7 @@ def export_geometry_to_ifc(geometry: Dict, project_name: str,
     earth_material = MaterialProperties(
         name="3D Printed Earth",
         thermal_conductivity=1.0,  # W/mK
-        density=1800,  # kg/m³
+        density=1800,  # kg/m3
         compressive_strength=3.5,  # MPa
         specific_heat=1000,
         porosity=0.3

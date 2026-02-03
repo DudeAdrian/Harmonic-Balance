@@ -249,6 +249,9 @@ def generate_dwelling(typology: str, params: Dict, job_id: str) -> Dict:
         docs_dir = output_dir / 'documentation'
         docs_dir.mkdir(exist_ok=True)
         
+        # Define project name for documentation
+        project_name = f"Harmonic_{typology.replace('_', ' ').title()}"
+        
         # 7a. CAD Drawings (DXF)
         try:
             dxf_files = create_drawing_set(project_name, geometry, docs_dir / 'dxf')

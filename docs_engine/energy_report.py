@@ -29,7 +29,7 @@ class ThermalElement:
     """Thermal building element."""
     name: str
     area_m2: float
-    u_value: float  # W/m²K
+    u_value: float  # W/m2K
     orientation: str = ""
 
 
@@ -38,8 +38,8 @@ class ClimateData:
     """Climate data for location."""
     location: str
     heating_degree_days: int
-    design_temp_outdoor: float  # °C
-    design_temp_indoor: float  # °C
+    design_temp_outdoor: float  # degC
+    design_temp_indoor: float  # degC
     solar_radiation_wh_m2: float  # Annual
 
 
@@ -51,7 +51,7 @@ class EnergyCalculator:
     
     # Reference values
     VENTILATION_RATE = 0.5  # ACH (air changes per hour)
-    INTERNAL_HEAT_GAIN_W_M2 = 4.0  # W/m²
+    INTERNAL_HEAT_GAIN_W_M2 = 4.0  # W/m2
     SOLAR_GAIN_FACTOR = 0.5
     
     def __init__(self, project_name: str, climate: ClimateData):
@@ -70,17 +70,17 @@ class EnergyCalculator:
         """
         Calculate U-value for earth wall per EN ISO 6946.
         
-        U = 1 / (Rsi + d/λ + Rse)
+        U = 1 / (Rsi + d/lambda + Rse)
         
         Args:
             thickness_m: Wall thickness in meters
             lambda_earth: Thermal conductivity of earth (W/mK)
         
         Returns:
-            U-value in W/m²K
+            U-value in W/m2K
         """
-        Rsi = 0.13  # Internal surface resistance (m²K/W)
-        Rse = 0.04  # External surface resistance (m²K/W)
+        Rsi = 0.13  # Internal surface resistance (m2K/W)
+        Rse = 0.04  # External surface resistance (m2K/W)
         
         R_wall = thickness_m / lambda_earth
         R_total = Rsi + R_wall + Rse
@@ -124,8 +124,8 @@ class EnergyCalculator:
         Hu = Ht * 0.10
         
         # Ventilation losses
-        # Hv = ρ * cp * n * V / 3600
-        rho = 1.2  # kg/m³ (air density)
+        # Hv = rho * cp * n * V / 3600
+        rho = 1.2  # kg/m3 (air density)
         cp = 1000  # J/kgK (specific heat)
         n = self.VENTILATION_RATE  # ACH
         V = self.volume_m3
@@ -169,7 +169,7 @@ class EnergyCalculator:
         Q_net = Q_heating - Q_internal - Q_solar
         Q_net = max(Q_net, 0)  # Can't be negative
         
-        # Specific heat load per m²
+        # Specific heat load per m2
         q_spec = Q_net / self.floor_area_m2 if self.floor_area_m2 > 0 else 0
         
         return {
@@ -194,7 +194,7 @@ class EnergyCalculator:
         # Heating energy
         Q_heating_kwh = H * self.climate.heating_degree_days * 24 / 1000
         
-        # Domestic hot water (simplified: 25 kWh/m²a)
+        # Domestic hot water (simplified: 25 kWh/m2a)
         Q_dhw_kwh = 25 * self.floor_area_m2
         
         # Auxiliary energy (pumps, fans): 5% of heating
@@ -226,7 +226,7 @@ class EnergyCalculator:
         Check Nearly Zero Energy Building compliance.
         
         Italy nZEB requirements (Climate Zone D):
-        - Specific primary energy: ≤ 50 kWh/m²a
+        - Specific primary energy: <= 50 kWh/m2a
         """
         energy = self.calculate_annual_energy_demand()
         q_primary = energy['specific_primary_energy_kwh_m2a']
@@ -294,8 +294,8 @@ class EnergyCalculator:
         info_data = [
             ['Parametro', 'Valore'],
             ['Località', self.climate.location],
-            ['Superficie utile', f'{self.floor_area_m2:.1f} m²'],
-            ['Volume', f'{self.volume_m3:.1f} m³'],
+            ['Superficie utile', f'{self.floor_area_m2:.1f} m2'],
+            ['Volume', f'{self.volume_m3:.1f} m3'],
             ['Zona climatica', 'D'],
         ]
         info_table = Table(info_data, colWidths=[70*mm, 70*mm])
@@ -316,8 +316,8 @@ class EnergyCalculator:
         story.append(Paragraph("<b>Prestazione energetica</b>", styles['Heading3']))
         perf_data = [
             ['Indicatore', 'Valore', 'Unità'],
-            ['Energia primaria', f"{energy['specific_primary_energy_kwh_m2a']:.1f}", 'kWh/m² anno'],
-            ['Limite nZEB', f"{nzeb['limit_kwh_m2a']}", 'kWh/m² anno'],
+            ['Energia primaria', f"{energy['specific_primary_energy_kwh_m2a']:.1f}", 'kWh/m2 anno'],
+            ['Limite nZEB', f"{nzeb['limit_kwh_m2a']}", 'kWh/m2 anno'],
             ['Stato', nzeb['status'], ''],
         ]
         perf_table = Table(perf_data, colWidths=[60*mm, 40*mm, 40*mm])
@@ -335,7 +335,7 @@ class EnergyCalculator:
         
         # Thermal envelope
         story.append(Paragraph("<b>Involucro termico</b>", styles['Heading3']))
-        env_data = [['Elemento', 'Area (m²)', 'U-value (W/m²K)']]
+        env_data = [['Elemento', 'Area (m2)', 'U-value (W/m2K)']],
         for elem in self.elements:
             env_data.append([elem.name, f"{elem.area_m2:.1f}", f"{elem.u_value:.2f}"])
         
@@ -368,17 +368,17 @@ Località: {self.climate.location}
 Data: {datetime.now().strftime('%Y-%m-%d')}
 
 DATI EDIFICIO:
-- Superficie: {self.floor_area_m2:.1f} m²
-- Volume: {self.volume_m3:.1f} m³
+- Superficie: {self.floor_area_m2:.1f} m2
+- Volume: {self.volume_m3:.1f} m3
 - Zona climatica: D
 
 PRESTAZIONE ENERGETICA:
-- Energia primaria: {energy['specific_primary_energy_kwh_m2a']:.1f} kWh/m² anno
-- Limite nZEB: {nzeb['limit_kwh_m2a']} kWh/m² anno
+- Energia primaria: {energy['specific_primary_energy_kwh_m2a']:.1f} kWh/m2 anno
+- Limite nZEB: {nzeb['limit_kwh_m2a']} kWh/m2 anno
 - Stato: {nzeb['status']}
 
 INVOLUCRO TERMICO:
-{chr(10).join(f"- {e.name}: A={e.area_m2:.1f}m², U={e.u_value:.2f}W/m²K" for e in self.elements)}
+{chr(10).join(f"- {e.name}: A={e.area_m2:.1f}m2, U={e.u_value:.2f}W/m2K" for e in self.elements)}
 
 Note: Per il certificato ufficiale APE, installare ReportLab.
 """
