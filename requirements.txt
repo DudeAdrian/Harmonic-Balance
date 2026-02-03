@@ -18,6 +18,10 @@ jsonschema>=4.0.0
 click>=8.0.0
 pyyaml>=6.0
 
+# Web application
+flask>=2.0.0
+werkzeug>=2.0.0
+
 # Testing
 pytest>=7.0.0
 pytest-cov>=3.0.0

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results - Harmonic Habitats</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <svg class="logo-icon" viewBox="0 0 100 100">
+                    <polygon points="50,5 95,27.5 95,72.5 50,95 5,72.5 5,27.5" fill="none" stroke="#C4A77D" stroke-width="2"/>
+                    <circle cx="50" cy="50" r="25" fill="none" stroke="#8B5A2B" stroke-width="1.5"/>
+                </svg>
+                <div class="logo-text">
+                    <h1>Harmonic Habitats</h1>
+                    <p class="tagline">Sacred Geometry for Resonant Dwellings</p>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="results-header">
+                <h2 class="section-title">Your Dwelling is Ready</h2>
+                <p class="job-id">Job ID: {{ job_id }}</p>
+            </div>
+
+            <div class="comparison-section">
+                <div class="comparison-card">
+                    <h3>Original Sketch</h3>
+                    <div class="image-container">
+                        {% if results.original_image %}
+                        <img src="{{ url_for('static', filename='uploads/' + results.original_image.split('/')[-1]) }}" alt="Original sketch">
+                        {% else %}
+                        <div class="placeholder-image">Original sketch not available</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="comparison-arrow">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M5 12 L19 12 M13 6 L19 12 L13 18" fill="none" stroke="#C4A77D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+
+                <div class="comparison-card">
+                    <h3>3D Generated Dwelling</h3>
+                    <div class="image-container preview-3d">
+                        <div class="preview-placeholder" id="preview-3d">
+                            <svg viewBox="0 0 200 200" class="dwelling-preview">
+                                {% if results.typology == 'single_pod' %}
+                                <!-- Single Pod - Circular -->
+                                <circle cx="100" cy="100" r="70" fill="none" stroke="#C4A77D" stroke-width="3"/>
+                                <circle cx="100" cy="100" r="25" fill="none" stroke="#8B5A2B" stroke-width="2"/>
+                                <line x1="100" y1="30" x2="100" y2="170" stroke="#C4A77D" stroke-width="1" opacity="0.3"/>
+                                <line x1="30" y1="100" x2="170" y2="100" stroke="#C4A77D" stroke-width="1" opacity="0.3"/>
+                                {% elif results.typology == 'multi_pod_cluster' %}
+                                <!-- Multi Pod Cluster -->
+                                <circle cx="100" cy="100" r="30" fill="none" stroke="#8B5A2B" stroke-width="2"/>
+                                <circle cx="100" cy="45" r="25" fill="none" stroke="#C4A77D" stroke-width="2"/>
+                                <circle cx="147" cy="77" r="25" fill="none" stroke="#C4A77D" stroke-width="2"/>
+                                <circle cx="147" cy="123" r="25" fill="none" stroke="#C4A77D" stroke-width="2"/>
+                                <circle cx="100" cy="155" r="25" fill="none" stroke="#C4A77D" stroke-width="2"/>
+                                {% else %}
+                                <!-- Organic Family - Flowing form -->
+                                <path d="M40,80 Q60,40 100,50 Q140,60 160,90 Q170,120 150,140 Q120,160 80,150 Q40,140 40,80 Z" 
+                                      fill="none" stroke="#C4A77D" stroke-width="3"/>
+                                <path d="M70,100 Q100,90 130,100" fill="none" stroke="#8B5A2B" stroke-width="2" opacity="0.5"/>
+                                {% endif %}
+                                <text x="100" y="190" text-anchor="middle" fill="#666" font-size="12">
+                                    {{ results.typology.replace('_', ' ').title() }}
+                                </text>
+                            </svg>
+                            <p class="preview-note">Interactive 3D view coming in v0.2</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="parameters-section">
+                <h3 class="subsection-title">Detected Parameters</h3>
+                <div class="parameter-cards">
+                    <div class="param-card primary">
+                        <div class="param-icon">🏠</div>
+                        <div class="param-content">
+                            <span class="param-label">Typology</span>
+                            <span class="param-value">{{ results.typology.replace('_', ' ').title() }}</span>
+                        </div>
+                    </div>
+
+                    <div class="param-card">
+                        <div class="param-icon">📐</div>
+                        <div class="param-content">
+                            <span class="param-label">Dimensions</span>
+                            <span class="param-value">
+                                {% if results.typology == 'single_pod' %}
+                                    {{ "%.1f"|format(results.geometry.diameter) }}m diameter
+                                {% elif results.typology == 'organic_family' %}
+                                    {{ "%.1f"|format(results.geometry.footprint_sqm) }}m²
+                                {% else %}
+                                    {{ results.geometry.total_sleepers }} sleepers
+                                {% endif %}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="param-card">
+                        <div class="param-icon">🔊</div>
+                        <div class="param-content">
+                            <span class="param-label">Target Frequency</span>
+                            <span class="param-value">{{ results.parameters.target_frequency }} Hz</span>
+                        </div>
+                    </div>
+
+                    <div class="param-card {% if results.compliance.overall_valid %}valid{% else %}invalid{% endif %}">
+                        <div class="param-icon">✓</div>
+                        <div class="param-content">
+                            <span class="param-label">Compliance</span>
+                            <span class="param-value">
+                                {% if results.compliance.overall_valid %}
+                                    NTC 2018 ✓
+                                {% else %}
+                                    Review Required
+                                {% endif %}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="acoustic-status">
+                    <h4>Acoustic Optimization</h4>
+                    <div class="frequency-bar">
+                        <div class="frequency-marker" style="left: 50%;"></div>
+                        <div class="frequency-labels">
+                            <span>0 Hz</span>
+                            <span class="target">7.83 Hz (Target)</span>
+                            <span>50 Hz</span>
+                        </div>
+                    </div>
+                    <p class="acoustic-note">
+                        {% if results.acoustic.schumann_coupling and results.acoustic.schumann_coupling.couplings_found > 0 %}
+                            ✓ Schumann resonance coupling detected ({{ results.acoustic.schumann_coupling.couplings_found }} modes)
+                        {% else %}
+                            Room modes calculated for acoustic optimization
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+
+            <div class="downloads-section">
+                <h3 class="subsection-title">Download Files</h3>
+                <div class="download-grid">
+                    <a href="/download/{{ job_id }}/gcode" class="download-card">
+                        <div class="download-icon">⚙️</div>
+                        <span class="download-name">G-code</span>
+                        <span class="download-desc">For 3D printer</span>
+                    </a>
+
+                    <a href="/download/{{ job_id }}/report" class="download-card">
+                        <div class="download-icon">📄</div>
+                        <span class="download-name">Report</span>
+                        <span class="download-desc">Full specification</span>
+                    </a>
+
+                    <a href="/download/{{ job_id }}/anchor" class="download-card">
+                        <div class="download-icon">🔗</div>
+                        <span class="download-name">Terracare</span>
+                        <span class="download-desc">Blockchain anchor</span>
+                    </a>
+
+                    <div class="download-card coming-soon">
+                        <div class="download-icon">🎨</div>
+                        <span class="download-name">STL / OBJ</span>
+                        <span class="download-desc">3D model (v0.2)</span>
+                    </div>
+
+                    <div class="download-card coming-soon">
+                        <div class="download-icon">📐</div>
+                        <span class="download-name">PDF Plans</span>
+                        <span class="download-desc">Construction docs (v0.2)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions-section">
+                <a href="/" class="btn-secondary">Upload New Sketch</a>
+                <button class="btn-secondary" onclick="window.print()">Print Results</button>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>Harmonic Habitats v0.1.0 | Sacred Geometry Engine</p>
+            <p class="footer-note">Compatible with WASP Crane and other earth printers</p>
+        </footer>
+    </div>
+</body>
+</html>

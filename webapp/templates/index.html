@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harmonic Habitats - Sketch to Dwelling</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <svg class="logo-icon" viewBox="0 0 100 100">
+                    <polygon points="50,5 95,27.5 95,72.5 50,95 5,72.5 5,27.5" fill="none" stroke="#C4A77D" stroke-width="2"/>
+                    <circle cx="50" cy="50" r="25" fill="none" stroke="#8B5A2B" stroke-width="1.5"/>
+                </svg>
+                <div class="logo-text">
+                    <h1>Harmonic Habitats</h1>
+                    <p class="tagline">Sacred Geometry for Resonant Dwellings</p>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="upload-section">
+                <h2 class="section-title">Upload Your Harmonic Habitat Sketch</h2>
+                <p class="section-description">
+                    Draw your vision of an earth dwelling—a circular pod, flowing organic form, or village cluster. 
+                    Our AI will analyze your sketch and generate a complete 3D printable design optimized for 
+                    Schumann resonance (7.83 Hz).
+                </p>
+
+                <form id="upload-form" action="/upload" method="POST" enctype="multipart/form-data">
+                    <div class="upload-zone" id="upload-zone">
+                        <input type="file" id="image-input" name="image" accept="image/*" required hidden>
+                        
+                        <div class="upload-content" id="upload-content">
+                            <svg class="upload-icon" viewBox="0 0 64 64">
+                                <path d="M32 8 L32 48 M16 32 L32 16 L48 32" fill="none" stroke="#8B5A2B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M8 40 L8 52 L56 52 L56 40" fill="none" stroke="#8B5A2B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <p class="upload-text">Drag & drop your sketch here</p>
+                            <p class="upload-subtext">or click to browse (JPG, PNG, GIF, max 16MB)</p>
+                        </div>
+
+                        <div class="image-preview" id="image-preview" hidden>
+                            <img id="preview-img" src="" alt="Preview">
+                            <button type="button" class="remove-btn" id="remove-btn">×</button>
+                        </div>
+                    </div>
+
+                    <div class="upload-info">
+                        <div class="typology-hints">
+                            <h3>What to draw:</h3>
+                            <div class="hint-cards">
+                                <div class="hint-card">
+                                    <div class="hint-icon">⬡</div>
+                                    <span class="hint-text">Circular Pod</span>
+                                    <small>Single dwelling</small>
+                                </div>
+                                <div class="hint-card">
+                                    <div class="hint-icon">❋</div>
+                                    <span class="hint-text">Village Cluster</span>
+                                    <small>Multiple domes</small>
+                                </div>
+                                <div class="hint-card">
+                                    <div class="hint-icon">~</div>
+                                    <span class="hint-text">Organic Form</span>
+                                    <small>Flowing lines</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="generate-btn" id="generate-btn" disabled>
+                        <span class="btn-text">Generate Dwelling</span>
+                        <svg class="btn-icon" viewBox="0 0 24 24" hidden>
+                            <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+                            <path d="M12 6 L12 12 L16 14" fill="none" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </button>
+                </form>
+
+                <div class="loading-overlay" id="loading-overlay" hidden>
+                    <div class="loading-content">
+                        <div class="spinner"></div>
+                        <h3>Generating Your Harmonic Habitat</h3>
+                        <p class="loading-status" id="loading-status">Analyzing sketch...</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <p class="loading-note">This may take 30-60 seconds</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>Harmonic Habitats v0.1.0 | Sacred Geometry Engine</p>
+            <p class="footer-note">Compatible with WASP Crane and other earth printers</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/upload.js') }}"></script>
+</body>
+</html>

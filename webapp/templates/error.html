@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error - Harmonic Habitats</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <svg class="logo-icon" viewBox="0 0 100 100">
+                    <polygon points="50,5 95,27.5 95,72.5 50,95 5,72.5 5,27.5" fill="none" stroke="#C4A77D" stroke-width="2"/>
+                    <circle cx="50" cy="50" r="25" fill="none" stroke="#8B5A2B" stroke-width="1.5"/>
+                </svg>
+                <div class="logo-text">
+                    <h1>Harmonic Habitats</h1>
+                    <p class="tagline">Sacred Geometry for Resonant Dwellings</p>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="error-section">
+                <div class="error-icon">⚠️</div>
+                <h2 class="error-title">Something Went Wrong</h2>
+                <p class="error-message">{{ message }}</p>
+                <a href="/" class="generate-btn">Return to Upload</a>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>Harmonic Habitats v0.1.0 | Sacred Geometry Engine</p>
+        </footer>
+    </div>
+</body>
+</html>
