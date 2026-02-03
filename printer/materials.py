@@ -237,7 +237,7 @@ class QualityControl:
             'test': 'Compression Strength',
             'sample_size': '150mm cubes',
             'cure_time': f"{cure_days} days",
-            'method': 'ASTM C109 or EN 196-1",
+            'method': 'ASTM C109 or EN 196-1',
             'frequency': '1 per 10m³ or daily',
             'expected_range': '2-10 MPa (mix dependent)'
         }
