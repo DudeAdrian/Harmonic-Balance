@@ -544,6 +544,19 @@ body {
     box-shadow: var(--shadow-soft);
 }
 
+.download-category {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    color: var(--color-earth);
+    margin: 1.5rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-sand);
+}
+
+.download-category:first-of-type {
+    margin-top: 0;
+}
+
 .download-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -570,6 +583,20 @@ body {
 .download-card.coming-soon {
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+.download-card.primary {
+    background: linear-gradient(135deg, var(--color-earth) 0%, #6B4423 100%);
+    border-color: var(--color-earth);
+    color: var(--color-white);
+}
+
+.download-card.primary .download-name {
+    color: var(--color-white);
+}
+
+.download-card.primary .download-desc {
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .download-icon {

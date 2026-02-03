@@ -152,6 +152,8 @@
 
             <div class="downloads-section">
                 <h3 class="subsection-title">Download Files</h3>
+                
+                <h4 class="download-category">Construction</h4>
                 <div class="download-grid">
                     <a href="/download/{{ job_id }}/gcode" class="download-card">
                         <div class="download-icon">⚙️</div>
@@ -159,10 +161,49 @@
                         <span class="download-desc">For 3D printer</span>
                     </a>
 
+                    <a href="/download/{{ job_id }}/bim" class="download-card">
+                        <div class="download-icon">🏢</div>
+                        <span class="download-name">BIM Model</span>
+                        <span class="download-desc">IFC for Revit/ArchiCAD</span>
+                    </a>
+
+                    <a href="/download/{{ job_id }}/drawings" class="download-card">
+                        <div class="download-icon">📐</div>
+                        <span class="download-name">Drawing Set</span>
+                        <span class="download-desc">PDF plans & sections</span>
+                    </a>
+
+                    <a href="/download/{{ job_id }}/documentation" class="download-card primary">
+                        <div class="download-icon">📦</div>
+                        <span class="download-name">Complete Package</span>
+                        <span class="download-desc">All docs (ZIP)</span>
+                    </a>
+                </div>
+
+                <h4 class="download-category">Documentation</h4>
+                <div class="download-grid">
                     <a href="/download/{{ job_id }}/report" class="download-card">
                         <div class="download-icon">📄</div>
                         <span class="download-name">Report</span>
                         <span class="download-desc">Full specification</span>
+                    </a>
+
+                    <a href="/download/{{ job_id }}/schedules" class="download-card">
+                        <div class="download-icon">📋</div>
+                        <span class="download-name">Schedules</span>
+                        <span class="download-desc">Materials & rooms</span>
+                    </a>
+
+                    <a href="/download/{{ job_id }}/structural" class="download-card">
+                        <div class="download-icon">⚡</div>
+                        <span class="download-name">Structural</span>
+                        <span class="download-desc">Load calculations</span>
+                    </a>
+
+                    <a href="/download/{{ job_id }}/energy" class="download-card">
+                        <div class="download-icon">🌡️</div>
+                        <span class="download-name">Energy Cert</span>
+                        <span class="download-desc">APE/nZEB compliance</span>
                     </a>
 
                     <a href="/download/{{ job_id }}/anchor" class="download-card">
@@ -170,18 +211,6 @@
                         <span class="download-name">Terracare</span>
                         <span class="download-desc">Blockchain anchor</span>
                     </a>
-
-                    <div class="download-card coming-soon">
-                        <div class="download-icon">🎨</div>
-                        <span class="download-name">STL / OBJ</span>
-                        <span class="download-desc">3D model (v0.2)</span>
-                    </div>
-
-                    <div class="download-card coming-soon">
-                        <div class="download-icon">📐</div>
-                        <span class="download-name">PDF Plans</span>
-                        <span class="download-desc">Construction docs (v0.2)</span>
-                    </div>
                 </div>
             </div>
 
