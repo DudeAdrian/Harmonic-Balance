@@ -89,7 +89,7 @@ class GenericSlicer:
             "; Firmware: Marlin (standard earth printing profile)",
             "; ============================================",
             "",
-            f"; Printer Specifications:
+            "; Printer Specifications:",
             f";   Reach radius: {self.config.reach_radius_m}m",
             f";   Max height: {self.config.max_height_m}m",
             f";   Nozzle diameter: {self.config.nozzle_diameter_mm}mm",
