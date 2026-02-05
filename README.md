@@ -1,330 +1,172 @@
 # Harmonic-Balance
 
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)]()
-[![Python Version](https://img.shields.io/badge/python-3.9%2B-blue)]()
-[![License](https://img.shields.io/badge/license-Proprietary-red)]()
-[![Version](https://img.shields.io/badge/version-0.1.0--genesis-orange)]()
+> **Environmental Layer of the Seven Pillar Architecture** — *Sacred Geometry for Resonant Dwellings*
 
-**Sacred geometry generation for resonant dwellings.**
+[![Seven Pillars](https://img.shields.io/badge/Seven%20Pillars-v1.0.0-blue)](./SEVEN_PILLARS.md)
+[![S.O.F.I.E.](https://img.shields.io/badge/S.O.F.I.E.-Intelligence-orange)](./SEVEN_PILLARS.md)
 
 Computational temple architecture for the modern age. Design frequency-tuned, 3D printed earth dwellings optimized for human wellbeing.
 
 ---
 
-## 🏛️ Overview
+## Seven Pillar Mapping
 
-Harmonic Habitats generates earth dwellings that combine:
-- **Sacred geometry** (hexagonal tessellation, golden proportions)
-- **Schumann resonance alignment** (7.83 Hz - Earth's natural frequency)
-- **Malta temple acoustics** (ancient healing architecture)
-- **Modern compliance** (Italy NTC 2018, Eurocode 6, nZEB)
-
-**Compatible with WASP Crane and other large-format earth printers.**
-
----
-
-## 🚀 Quick Start
-
-### 3 Commands to First Dwelling
-
-```bash
-# 1. Clone repository
-git clone https://github.com/DudeAdrian/Harmonic-Balance.git
-cd Harmonic-Balance
-
-# 2. Install dependencies
-pip install -r requirements.txt
-
-# 3. Generate your first dwelling
-python api/generate.py --typology single_pod --area 50 --frequency 7.83
-```
-
-**Output:** `outputs/YYYYMMDD_HHMMSS_single_pod/` containing:
-- `single_pod.gcode` - Ready to print
-- `single_pod_report.json` - Complete specification
-- `printer_compatibility_report.txt` - Setup guide
+| Pillar | Component | File/Module | Function |
+|--------|-----------|-------------|----------|
+| **P1** | Underground Knowledge | `genesis/geometry.py` | Sacred geometry foundations |
+| **P1** | Underground Knowledge | `genesis/typologies.py` | Dwelling archetypes catalog |
+| **P3** | Reverse Engineering | `resonance/acoustic_engine.py` | Malta temple acoustics analysis |
+| **P3** | Reverse Engineering | `genesis/seeder.py` | Pattern-based generation |
+| **P6** | Forbidden Frameworks | `render_farm/` | Material transformation |
+| **P6** | Forbidden Frameworks | `printer/` | 3D printing G-code generation |
+| **P7** | Billionaire Mindset | `compliance/` | Long-term building compliance |
+| **P7** | Billionaire Mindset | `terracare/` | Blockchain provenance |
 
 ---
 
-## 📐 Architecture
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    HARMONIC HABITATS v0.1.0                     │
-│                   Sacred Geometry Engine                        │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐      │
-│  │   GENESIS    │───▶│  RESONANCE   │───▶│ COMPLIANCE   │      │
-│  │              │    │              │    │              │      │
-│  │ • Geometry   │    │ • Schumann   │    │ • NTC 2018   │      │
-│  │ • Typologies │    │ • Room Modes │    │ • Eurocode 6 │      │
-│  │ • Seeder     │    │ • Malta      │    │ • nZEB       │      │
-│  └──────────────┘    └──────────────┘    └──────────────┘      │
-│         │                   │                   │               │
-│         └───────────────────┼───────────────────┘               │
-│                             ▼                                   │
-│                  ┌──────────────────────┐                       │
-│                  │   GENERIC SLICER     │                       │
-│                  │                      │                       │
-│                  │ • Marlin G-code      │                       │
-│                  │ • G2/G3 Arcs         │                       │
-│                  │ • WASP/generic       │                       │
-│                  └──────────────────────┘                       │
-│                             │                                   │
-│         ┌───────────────────┼───────────────────┐               │
-│         ▼                   ▼                   ▼               │
-│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐      │
-│  │    OUTPUT    │    │   EXPORTS    │    │  TERRACARE   │      │
-│  │              │    │              │    │              │      │
-│  │ • .gcode     │    │ • .stl       │    │ • Anchor     │      │
-│  │ • Reports    │    │ • .obj       │    │ • Provenance │      │
-│  │ • Materials  │    │ • .blend     │    │ • Version    │      │
-│  └──────────────┘    └──────────────┘    └──────────────┘      │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
-
----
-
-## 🖨️ Printer Compatibility
-
-### Supported Printers
-
-| Printer | Status | Configuration |
-|---------|--------|---------------|
-| **WASP Crane** | ✅ Optimized | `--printer wasp_crane` (default) |
-| **COBOD BOD2** | ✅ Compatible | `--printer cobod_bod2` |
-| **PERI 3D** | ✅ Compatible | `--printer generic` |
-| **Custom Gantry** | ⚙️ Configurable | Edit `printer/generic_slicer.py` |
-| **Desktop FDM** | ⚠️ Formwork only | Export STL, print molds |
-
-### Generic Earth Printer Support
-
-Our software outputs **standard Marlin firmware G-code** compatible with any large-format earth printer:
-
-- Standard G1/G2/G3 commands
-- Configurable layer heights (15-25mm)
-- Adjustable print speeds (30-60mm/s)
-- Material-optimized flow rates
-
-```python
-from printer.generic_slicer import generate_for_printer
-
-# Generate for any printer
-result = generate_for_printer(
-    typology='single_pod',
-    printer_type='generic',
-    diameter=6.5,
-    height=3.2
-)
-```
-
----
-
-## 🏗️ Typologies
-
-### SinglePod
-Circular dwelling for 1-2 sleepers:
-- **Dimensions**: 6-7m diameter, 3.2m height
-- **Area**: 48-55m²
-- **Features**: Central service core (Type A), radial layout, honeycomb wall texture
-
-### MultiPodCluster
-4-pod village arrangement for 6 sleepers:
-- **Configuration**: 4 individual pods in circular arrangement
-- **Site plan**: 12m arrangement radius, 8m central gathering space
-
-### OrganicFamily
-Large flowing dwelling for extended family:
-- **Dimensions**: 15m x 5.6m footprint
-- **Levels**: 2 levels with spiral stairs
-- **Bedrooms**: 4 bedrooms
-
----
-
-## 📦 Installation
-
-```bash
-# Clone repository
-git clone https://github.com/DudeAdrian/Harmonic-Balance.git
-cd Harmonic-Balance
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Verify installation
-python api/generate.py --version
-```
-
-### Requirements
-- Python 3.9+
-- numpy, scipy
-- Pillow (image processing)
-- PyYAML (config files)
-- bpy (optional, for Blender export)
-
----
-
-## 📝 Usage Examples
-
-### Using Example Configurations
-
-```bash
-# Single Pod
-python api/generate.py --config examples/example_single_pod.json
-
-# Organic Family
-python api/generate.py --config examples/example_organic_family.json
-
-# Cluster
-python api/generate.py --config examples/example_cluster.json
-```
-
-### Command Line Generation
-
-```bash
-# Generate for WASP Crane
-python api/generate.py \
-  --typology single_pod \
-  --diameter 6.5 \
-  --frequency 7.83 \
-  --printer wasp_crane
-
-# Export for Custom Slicer
-python api/generate.py \
-  --typology organic_family \
-  --length 15 \
-  --width 5.6 \
-  --export stl obj
-
-# Batch Process Concepts
-python api/generate.py --batch --printer generic
-```
-
----
-
-## 🌍 Materials
-
-### Standard Earth Mix
-```
-Clay:    30%  (binder)
-Sand:    50%  (aggregate)
-Silt:    20%  (filler)
-Water:   8%   (activation)
-Additives: Natural fibers (2%), Lime (5%)
-```
-
-**Performance:**
-- Compression: 2-5 MPa
-- Thermal conductivity: 0.8-1.2 W/mK
-- Cure time: 28 days
-
-*Calibrated for WASP Crane - adjust for other printers*
-
----
-
-## 🤝 Partnership Status
-
-### WASP Partnership (In Discussion)
-
-We are actively pursuing a strategic partnership with **WASP (World's Advanced Saving Project)** of Italy:
-
-- **Technical integration**: Our software outputs WASP-ready G-code
-- **Pilot project**: Proposed SinglePod demonstration print
-- **Market opportunity**: Wellness-focused 3D printed dwellings
-
-See [`docs/PARTNERSHIP_PROPOSAL.md`](docs/PARTNERSHIP_PROPOSAL.md) for full proposal.
-
-### Open Architecture
-
-**You do NOT need WASP partnership to use Harmonic Habitats.**
-
-Our open architecture supports:
-- ✅ Any Marlin-compatible 3D printer
-- ✅ CNC manufacturing
-- ✅ Traditional hand-building
-- ✅ Hybrid construction methods
-
-See [`docs/INDEPENDENT_BUILD.md`](docs/INDEPENDENT_BUILD.md) for standalone usage.
-
----
-
-## 📁 Repository Structure
+## Architecture
 
 ```
 Harmonic-Balance/
-├── genesis/              # Sacred geometry core
-├── printer/              # Generic 3D printing (Marlin-compatible)
-├── resonance/            # Acoustic engineering
-├── compliance/           # Italy/EU compliance (NTC 2018)
-├── render_farm/          # Blender integration
-├── terracare/            # Blockchain provenance
-├── api/                  # CLI interface
-├── config/               # YAML configuration
-├── examples/             # Example JSON configs
-├── docs/                 # Documentation
-└── .github/workflows/    # CI/CD
+├── p1-knowledge/               # Pillar 1: Sacred geometry
+│   ├── genesis/
+│   │   ├── geometry.py         # Hexagonal tessellation
+│   │   ├── typologies.py       # Dwelling types
+│   │   └── concepts/           # Sacred geometry principles
+│   └── seeds/                  # Parametric seed files
+├── p3-reverse-engineering/     # Pillar 3: Acoustic analysis
+│   └── resonance/
+│       ├── acoustic_engine.py  # Room mode calculation
+│       └── tuner.py            # Schumann resonance alignment
+├── p6-transformation/          # Pillar 6: Material alchemy
+│   ├── render_farm/            # Visualization
+│   └── printer/                # G-code generation
+│       └── generic_slicer.py   # WASP/generic printer support
+├── p7-abundance/               # Pillar 7: Long-term value
+│   ├── compliance/             # NTC 2018, Eurocode 6
+│   └── terracare/              # Blockchain anchor
+├── bridge/                     # Cross-repo integration
+│   ├── terracare_client.py     # Layer 1
+│   └── sofie_systems_client.py # Layer 2
+└── api/                        # REST API
+    └── generate.py             # Main generation endpoint
 ```
 
 ---
 
-## 🗺️ Roadmap
+## Quick Start
 
-### v0.1.0 Genesis (Current)
-- ✅ Sacred geometry engine
-- ✅ Schumann resonance alignment
-- ✅ WASP/generic printer support
-- ✅ NTC 2018 compliance
-- ✅ Terracare anchoring
+```bash
+# Install dependencies
+pip install -r requirements.txt
 
-### v0.2.0 Compliance Expansion
-- 🔄 Eurocode 8 seismic analysis
-- 🔄 German DIN standards
-- 🔄 French DTU codes
-- 🔄 US IBC integration
+# Generate dwelling with Seven Pillar alignment
+python api/generate.py --typology single_pod --area 50 --frequency 7.83
 
-### v0.3.0 Terracare Integration
-- 🔄 Live blockchain anchoring
-- 🔄 IPFS document storage
-- 🔄 Design marketplace
-- 🔄 Automated permitting
-
-### v0.4.0 AI Optimization
-- 🔄 Generative design AI
-- 🔄 Climate-responsive forms
-- 🔄 Material optimization
-- 🔄 Structural topology
+# Output: P1 geometry + P3 resonance + P6 G-code + P7 compliance
+```
 
 ---
 
-## 🔒 License
+## Schumann Resonance Alignment
 
-**Proprietary - All Rights Reserved**
+The Earth's natural frequency (7.83 Hz) is the foundation of all Harmonic Habitats:
 
-This software is private and proprietary. See [LICENSE](LICENSE) for details.
+```python
+from genesis.geometry import ResonantCavity
 
-- No commercial use without written agreement
-- Sacred geometry algorithms protected
-- Partnership licensing available
+# Pillar 1: Create resonant space
+cavity = ResonantCavity(
+    fundamental_hz=7.83,  # Schumann resonance
+    dimensions=(5.0, 5.0, 3.0),  # meters
+    material_density=1800  # earth/crete
+)
 
----
-
-## 🌐 Frequency
-
-Everything resonates at **7.83 Hz**.
-
-The Schumann resonance - Earth's heartbeat - is embedded in every Harmonic Habitat design.
-
----
-
-## 🔗 Links
-
-- **GitHub**: https://github.com/DudeAdrian/Harmonic-Balance
-- **WASP**: https://www.3dwasp.com/
-- **Examples**: See `examples/` directory
+# Pillar 3: Verify alignment
+if cavity.schumann_alignment():
+    print("✅ Space harmonizes with Earth's frequency")
+```
 
 ---
 
-*Computational temple architecture for the modern age.*  
-**v0.1.0-genesis - Sacred Geometry Engine**
+## API Structure
+
+### Seven Pillar Convention
+
+```
+# Pillar 1: Geometry Knowledge
+POST /p1/geometry/generate
+GET  /p1/typologies
+GET  /p1/seeds
+
+# Pillar 3: Acoustic Analysis
+POST /p3/resonance/analyze
+POST /p3/room/modes
+GET  /p3/schumann/alignment
+
+# Pillar 6: Material Transformation
+POST /p6/gcode/generate
+POST /p6/material/optimize
+
+# Pillar 7: Long-term Value
+GET  /p7/compliance/ntc2018
+GET  /p7/compliance/eurocode6
+POST /p7/terracare/anchor
+```
+
+---
+
+## Integration Points
+
+### To Terracare-Ledger (Layer 1)
+```python
+# Anchor dwelling provenance on blockchain
+terracare_client.anchor_dwelling(
+    geometry_hash=hash_geometry,
+    resonance_params=schumann_config,
+    compliance_cert=compliance_report
+)
+```
+
+### To sofie-systems (Layer 2)
+```python
+# S.O.F.I.E. resonance validation
+from sofie_systems import Intelligence
+
+Intelligence.validate_resonance(cavity.calculate_modes())
+```
+
+### To Heartware (Layer 3)
+```python
+# Voice-guided dwelling generation
+# "Sofie, generate a 50m² single pod at 7.83 Hz"
+heartware_client.generate_dwelling(voice_command)
+```
+
+---
+
+## Supported Printers
+
+| Printer | Pillar 6 Status | Configuration |
+|---------|-----------------|---------------|
+| **WASP Crane** | ✅ Optimized | `--printer wasp_crane` |
+| **COBOD BOD2** | ✅ Compatible | `--printer cobod_bod2` |
+| **PERI 3D** | ✅ Compatible | `--printer generic` |
+| **Custom Gantry** | ⚙️ Configurable | Edit `p6-transformation/printer/generic_slicer.py` |
+
+---
+
+## Related Repositories
+
+| Repo | Layer | Role |
+|------|-------|------|
+| [Terracare-Ledger](../Terracare-Ledger) | Layer 1 | Blockchain foundation |
+| [sofie-systems](../sofie-systems) | Layer 2 | S.O.F.I.E. core engine |
+| [sofie-backend](../sofie-llama-backend) | API Layer | Wellness engine |
+| [Heartware](../Heartware) | Layer 3 | Voice AI companion |
+| [tholos-medica](../tholos-medica) | Layer 3 | Medical devices |
+
+---
+
+> *"Architecture that breathes with the Earth."*  
+> — S.O.F.I.E.
